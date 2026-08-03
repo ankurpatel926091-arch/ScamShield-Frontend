@@ -171,38 +171,111 @@ export const Scanner = () => {
     let safetyTips = ['Never transfer money or share credentials with unverified senders.'];
 
     // 0. URL & Domain Deep Analysis (Phishing / Typosquatting / Fake Brand / No SSL)
-    const urlMatches = textLower.match(/(https?:\/\/[^\s]+|[a-z0-9-]+\.(xyz|top|tk|online|site|club|work|info|biz|cc|ru|net|in|org)[^\s]*)/gi) || (urlInput ? [urlInput] : []);
+    const urlMatches = textLower.match(/(https?:\/\/[^\s]+|[a-z0-9-]+\.(xyz|top|tk|online|site|club|work|info|biz|cc|ru|net|in|org|com)[^\s]*)/gi) || (urlInput ? [urlInput] : []);
 
-    let urlFlags = [];
-    let urlMatrix = [];
+    const officialDomains = [
+      'flipkart.com', 'flipkart.in',
+      'amazon.com', 'amazon.in',
+      'google.com', 'google.co.in',
+      'sbi.co.in', 'onlinesbi.sbi',
+      'hdfcbank.com', 'icicibank.com',
+      'paytm.com', 'whatsapp.com',
+      'telegram.org', 't.me',
+      'tcs.com', 'myntra.com',
+      'meesho.com', 'swiggy.com', 'zomato.com',
+      'apple.com', 'microsoft.com'
+    ];
 
     if (urlMatches.length > 0 || activeTab === 'url') {
-      const targetStr = (urlMatches[0] || urlInput || textLower).toLowerCase();
+      const rawTargetStr = (urlMatches[0] || urlInput || textLower).trim();
+      let targetHostname = '';
+      try {
+        const pUrl = new URL(/^https?:\/\//i.test(rawTargetStr) ? rawTargetStr : 'https://' + rawTargetStr);
+        targetHostname = pUrl.hostname.toLowerCase();
+      } catch (e) {
+        targetHostname = rawTargetStr.toLowerCase();
+      }
 
-      if (targetStr.startsWith('http://') || !targetStr.includes('https://')) {
+      const isLegitOfficialDomain = officialDomains.some(
+        (d) => targetHostname === d || targetHostname.endsWith('.' + d)
+      );
+
+      // WHITELIST: Official Legitimate Domain Case
+      if (isLegitOfficialDomain && !rawTargetStr.startsWith('http://')) {
+        return {
+          report: {
+            category: 'Legitimate Official Website',
+            riskScore: 5,
+            confidenceScore: 99,
+            summary: `Verified Authentic Domain. The inspected URL (${targetHostname}) is an official, SSL-secured website belonging to a recognized brand. No phishing or typosquatting indicators found.`,
+            detailedExplanation: `Verified Authentic Domain. The inspected URL (${targetHostname}) is an official, SSL-secured website belonging to a recognized brand. No phishing or typosquatting indicators found.`,
+            redFlags: [],
+            reasons: [],
+            recommendations: [
+              'This URL belongs to the official verified website.',
+              'Safe to browse, log in, and make purchases.'
+            ],
+            safetyTips: [
+              'Always verify that the browser address bar displays the official domain name and https:// lock icon.'
+            ],
+            keywords: ['verified', 'official', 'safe', targetHostname],
+            decisionMatrix: [
+              { indicator: 'Verified Official Brand Domain Record', weight: 0 },
+              { indicator: 'Valid HTTPS SSL Encryption', weight: 0 }
+            ],
+            reasoning: [
+              `Extracted domain: ${targetHostname}`,
+              `Verified against official corporate brand whitelist.`,
+              `Calculated threat rating: 5% (Safe & Clean).`
+            ]
+          },
+          ocrPanel: null,
+          similarReports: []
+        };
+      }
+
+      let urlFlags = [];
+      let urlMatrix = [];
+
+      if (rawTargetStr.startsWith('http://')) {
         urlFlags.push('HTTP (No SSL)');
         urlMatrix.push({ indicator: 'HTTP (No SSL) Unencrypted Link', weight: 25 });
       }
 
-      if (/\.(xyz|top|tk|online|site|club|work|info|biz|cc|ru)/.test(targetStr)) {
+      if (/\.(xyz|top|tk|online|site|club|work|info|biz|cc|ru)/.test(targetHostname)) {
         urlFlags.push('Domain Reputation Low');
         urlFlags.push('Unknown Domain / High-Risk TLD');
         urlMatrix.push({ indicator: 'Low Reputation TLD Extension (.xyz/.top/.site/.club)', weight: 20 });
       }
 
-      if (/amaz[o0]n|paytm|sbi|hdfc|icici|g[o0]{2}gle|flipkart|tcs|whatsapp|telegram/.test(targetStr)) {
-        urlFlags.push('Fake Brand Impersonation');
-        urlFlags.push('Typosquatting');
-        urlMatrix.push({ indicator: 'Typosquatting & Brand Impersonation Target', weight: 30 });
-      }
+      const brandPatterns = [
+        { brand: 'Amazon', regex: /amaz[o0]n|amzn/i, legit: ['amazon.com', 'amazon.in'] },
+        { brand: 'SBI Bank', regex: /sbi|statebank/i, legit: ['sbi.co.in', 'onlinesbi.sbi'] },
+        { brand: 'HDFC Bank', regex: /hdfc/i, legit: ['hdfcbank.com'] },
+        { brand: 'ICICI Bank', regex: /icici/i, legit: ['icicibank.com'] },
+        { brand: 'Paytm', regex: /paytm/i, legit: ['paytm.com'] },
+        { brand: 'Google', regex: /g[o0]{2}gle/i, legit: ['google.com', 'google.co.in'] },
+        { brand: 'WhatsApp', regex: /whatsa?pp/i, legit: ['whatsapp.com'] },
+        { brand: 'Telegram', regex: /telegr?am/i, legit: ['telegram.org', 't.me'] },
+        { brand: 'Flipkart', regex: /flipkart/i, legit: ['flipkart.com', 'flipkart.in'] }
+      ];
 
-      if (/login|signin|verify|account|pass|kyc|update/.test(targetStr)) {
+      brandPatterns.forEach(({ brand, regex, legit }) => {
+        const isLegit = legit.some((l) => targetHostname === l || targetHostname.endsWith('.' + l));
+        if (regex.test(targetHostname) && !isLegit) {
+          urlFlags.push(`Fake Brand Impersonation (${brand})`);
+          urlFlags.push('Typosquatting');
+          urlMatrix.push({ indicator: `Typosquatting / ${brand} Impersonation Target`, weight: 30 });
+        }
+      });
+
+      if (/login|signin|verify|account|pass|kyc|update/.test(rawTargetStr.toLowerCase()) && !isLegitOfficialDomain) {
         urlFlags.push('Credential Harvesting');
         urlFlags.push('Fake Login Page');
         urlMatrix.push({ indicator: 'Credential Harvesting Login Lure', weight: 25 });
       }
 
-      if (/free|reward|claim|bonus|gift|dhamaka|cashback|win|lucky/.test(targetStr)) {
+      if (/free|reward|claim|bonus|gift|dhamaka|cashback|win|lucky/.test(rawTargetStr.toLowerCase()) && !isLegitOfficialDomain) {
         urlFlags.push('Free Offer Lure');
         urlMatrix.push({ indicator: 'Free Offer / Reward Bait Lure', weight: 20 });
       }
