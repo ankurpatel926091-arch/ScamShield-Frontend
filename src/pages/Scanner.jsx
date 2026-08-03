@@ -29,6 +29,8 @@ export const Scanner = () => {
   const [activeTab, setActiveTab] = useState(initialType);
   const [loading, setLoading] = useState(false);
   const [reportResult, setReportResult] = useState(null);
+  const [ocrPanelData, setOcrPanelData] = useState(null);
+  const [similarReportsData, setSimilarReportsData] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
 
   // Tab 1: Screenshot & Camera OCR state
@@ -134,61 +136,6 @@ export const Scanner = () => {
     }
   };
 
-  const generateFallbackScanReport = (type = 'Screenshot', payloadText = '') => {
-    const textLower = (payloadText || '').toLowerCase();
-    let riskScore = 92;
-    let category = 'Fake Job';
-    let reasons = [
-      'Upfront registration or security fee deposit request detected',
-      'Unverified Telegram or WhatsApp recruiter handle',
-      'Unrealistically high daily income promise for basic tasks',
-      'Suspicious registration link / domain'
-    ];
-
-    if (textLower.includes('upi') || textLower.includes('qr') || textLower.includes('paytm') || textLower.includes('phonepe')) {
-      category = 'UPI / QR Code';
-      riskScore = 95;
-      reasons = [
-        'Requests entering UPI PIN to receive money',
-        'Unverified payment link or QR code lure',
-        'High-risk financial refund trap pattern'
-      ];
-    } else if (textLower.includes('bill') || textLower.includes('disconnect') || textLower.includes('electricity') || textLower.includes('apk')) {
-      category = 'Phishing / SMS Trap';
-      riskScore = 98;
-      reasons = [
-        'Urgent power disconnection threat lure',
-        'Urges installing third-party .APK package',
-        'Unofficial caller phone number provided'
-      ];
-    } else if (textLower.includes('bank') || textLower.includes('account') || textLower.includes('kyc')) {
-      category = 'Bank Scam';
-      riskScore = 90;
-      reasons = [
-        'Fake bank impersonation lure',
-        'Unsolicited KYC update request',
-        'Suspicious banking credentials trap'
-      ];
-    }
-
-    return {
-      riskScore,
-      confidenceScore: 94,
-      category,
-      reasons,
-      detailedExplanation: 'AI Security Intelligence inspected the camera image payload. The content exhibits severe indicators matching known cyber fraud, fake job lures, and deposit traps.',
-      safetyTips: [
-        'Never pay upfront registration or security fees for online jobs.',
-        'Do not enter your UPI PIN when receiving money.',
-        'Do not click unverified short URLs (e.g. tinyurl, bitly, .xyz).'
-      ],
-      recommendedActions: [
-        'Do not transfer any money or share personal credentials.',
-        'Block the sender and report the incident to cybercrime cell (cybercrime.gov.in).'
-      ]
-    };
-  };
-
   const handleScreenshotScan = async (overrideBase64) => {
     const payloadBase64 = overrideBase64 || imageBase64;
     if (!payloadBase64 && !textContent) {
@@ -199,11 +146,17 @@ export const Scanner = () => {
     setErrorMsg('');
     try {
       const res = await aiApi.scanScreenshot(payloadBase64, textContent);
-      setReportResult(res.data?.report || res.report || generateFallbackScanReport('Screenshot', textContent));
+      const data = res.data || res;
+      if (data.report) {
+        setReportResult(data.report);
+        setOcrPanelData(data.ocrPanel || null);
+        setSimilarReportsData(data.similarReports || []);
+      } else {
+        setErrorMsg('Analysis Failed. Unable to generate report. Please try again.');
+      }
     } catch (err) {
-      console.warn('[AI Scan API Notice] Endpoint unavailable or returned error. Running client AI engine:', err);
-      const fallbackReport = generateFallbackScanReport('Screenshot', textContent);
-      setReportResult(fallbackReport);
+      console.error('[Scan Screenshot Error]', err);
+      setErrorMsg(err.message || 'Analysis Failed. Unable to generate report. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -218,11 +171,17 @@ export const Scanner = () => {
     setErrorMsg('');
     try {
       const res = await aiApi.scanText(textContent, 'Text');
-      setReportResult(res.data?.report || res.report || generateFallbackScanReport('Text', textContent));
+      const data = res.data || res;
+      if (data.report) {
+        setReportResult(data.report);
+        setOcrPanelData(data.ocrPanel || null);
+        setSimilarReportsData(data.similarReports || []);
+      } else {
+        setErrorMsg('Analysis Failed. Unable to generate report. Please try again.');
+      }
     } catch (err) {
-      console.warn('[AI Scan API Notice] Endpoint unavailable. Running client AI engine:', err);
-      const fallbackReport = generateFallbackScanReport('Text', textContent);
-      setReportResult(fallbackReport);
+      console.error('[Scan Text Error]', err);
+      setErrorMsg(err.message || 'Analysis Failed. Unable to generate report. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -237,11 +196,17 @@ export const Scanner = () => {
     setErrorMsg('');
     try {
       const res = await aiApi.scanUrl(urlInput);
-      setReportResult(res.data?.report || res.report || generateFallbackScanReport('URL', urlInput));
+      const data = res.data || res;
+      if (data.report) {
+        setReportResult(data.report);
+        setOcrPanelData(null);
+        setSimilarReportsData(data.similarReports || []);
+      } else {
+        setErrorMsg('Analysis Failed. Unable to generate report. Please try again.');
+      }
     } catch (err) {
-      console.warn('[AI Scan API Notice] Endpoint unavailable. Running client AI engine:', err);
-      const fallbackReport = generateFallbackScanReport('URL', urlInput);
-      setReportResult(fallbackReport);
+      console.error('[Scan URL Error]', err);
+      setErrorMsg(err.message || 'URL security scan failed.');
     } finally {
       setLoading(false);
     }
@@ -259,7 +224,7 @@ export const Scanner = () => {
       } else {
         res = await aiApi.searchPhone(lookupQuery);
       }
-      setLookupResult(res.data.result);
+      setLookupResult(res.data?.result || res.result);
     } catch (err) {
       setErrorMsg(err.message || 'Lookup search failed.');
     } finally {
@@ -286,7 +251,15 @@ export const Scanner = () => {
       {reportResult ? (
         <ScanReportView
           report={reportResult}
-          onReset={() => setReportResult(null)}
+          ocrPanel={ocrPanelData}
+          similarReports={similarReportsData}
+          onReset={() => {
+            setReportResult(null);
+            setOcrPanelData(null);
+            setSimilarReportsData([]);
+            setImagePreview(null);
+            setImageBase64('');
+          }}
           imagePreview={imagePreview}
           textContent={textContent || reportResult?.extractedText}
           urlInput={urlInput}
@@ -357,9 +330,11 @@ export const Scanner = () => {
           </div>
 
           {errorMsg && (
-            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
-              <span>{errorMsg}</span>
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-sm font-bold flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+              <div>
+                <span>{errorMsg}</span>
+              </div>
             </div>
           )}
 
@@ -520,7 +495,7 @@ export const Scanner = () => {
               )}
 
               <Button
-                onClick={handleScreenshotScan}
+                onClick={() => handleScreenshotScan()}
                 isLoading={loading}
                 disabled={!imagePreview && !textContent}
                 className="w-full"
