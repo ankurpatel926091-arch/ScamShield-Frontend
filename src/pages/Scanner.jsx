@@ -554,7 +554,6 @@ export const Scanner = () => {
         setLookupResult(analyzeLookupClientFallback(lookupQuery));
       }
     } catch (err) {
-      console.warn('[Lookup Search Notice] Backend API offline/error. Executing Client Search Engine:', err);
       setLookupResult(analyzeLookupClientFallback(lookupQuery));
     } finally {
       setLoading(false);
