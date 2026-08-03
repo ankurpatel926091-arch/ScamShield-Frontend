@@ -174,9 +174,9 @@ export const Home = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-panel text-xs font-bold text-cyan-400 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.25)]"
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-panel text-xs font-bold text-cyan-700 dark:text-cyan-400 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.25)]"
           >
-            <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
+            <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyan-400 animate-pulse" />
             <span>Next-Gen Multi-Modal AI Threat Intelligence Platform</span>
           </motion.div>
 
@@ -185,7 +185,7 @@ export const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-7xl font-black tracking-tight text-white leading-[1.08]"
+            className="text-4xl sm:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08]"
           >
             Detect Online Scams <br className="hidden sm:inline" />
             Before They <span className="gradient-text">Detect You.</span>
@@ -196,7 +196,7 @@ export const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed font-normal"
+            className="text-slate-600 dark:text-slate-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed font-normal"
           >
             Use AI to analyze suspicious messages, websites, screenshots, emails and phone numbers within seconds.
           </motion.p>
@@ -233,23 +233,23 @@ export const Home = () => {
 
 
       {/* ==================== SECTION 2: LIVE STATS COUNTER ==================== */}
-      <section className="border-y border-slate-800/80 bg-slate-950/80 backdrop-blur-md py-12 relative">
+      <section className="border-y border-slate-200 dark:border-slate-800/80 bg-slate-100/80 dark:bg-slate-950/80 backdrop-blur-md py-12 relative transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div className="space-y-1">
-            <h3 className="text-3xl sm:text-5xl font-black text-white font-mono gradient-text">2 Million+</h3>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Scans Performed</p>
+            <h3 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-mono gradient-text">2 Million+</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">Scans Performed</p>
           </div>
           <div className="space-y-1">
-            <h3 className="text-3xl sm:text-5xl font-black text-white font-mono gradient-text">120K+</h3>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Active Users Protected</p>
+            <h3 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-mono gradient-text">120K+</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">Active Users Protected</p>
           </div>
           <div className="space-y-1">
-            <h3 className="text-3xl sm:text-5xl font-black text-white font-mono gradient-text">95%</h3>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">AI Detection Accuracy</p>
+            <h3 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-mono gradient-text">95%</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">AI Detection Accuracy</p>
           </div>
           <div className="space-y-1">
-            <h3 className="text-3xl sm:text-5xl font-black text-white font-mono gradient-text">80K+</h3>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Scams Reported & Cataloged</p>
+            <h3 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-mono gradient-text">80K+</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">Scams Reported & Cataloged</p>
           </div>
         </div>
       </section>
@@ -257,27 +257,27 @@ export const Home = () => {
 
       {/* ==================== SECTION 3: TRUST LOGOS BAR ==================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+        <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">
           Powered by Industry-Leading AI Models & Cyber Security Standards
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-          <span className="text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-cyan-400" /> Google Cloud AI
+        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-80 dark:opacity-70 hover:opacity-100 transition-all duration-500">
+          <span className="text-slate-800 dark:text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
+            <Cpu className="w-5 h-5 text-cyan-600 dark:text-cyan-400" /> Google Cloud AI
           </span>
-          <span className="text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-blue-400" /> Microsoft Security
+          <span className="text-slate-800 dark:text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-blue-600 dark:text-blue-400" /> Microsoft Security
           </span>
-          <span className="text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
-            <Globe className="w-5 h-5 text-purple-400" /> Cloudflare Radar
+          <span className="text-slate-800 dark:text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
+            <Globe className="w-5 h-5 text-purple-600 dark:text-purple-400" /> Cloudflare Radar
           </span>
-          <span className="text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
-            <Lock className="w-5 h-5 text-emerald-400" /> Stripe Security
+          <span className="text-slate-800 dark:text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
+            <Lock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> Stripe Security
           </span>
-          <span className="text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
-            <Database className="w-5 h-5 text-amber-400" /> GitHub Open-Source
+          <span className="text-slate-800 dark:text-slate-300 font-black text-lg tracking-wider flex items-center gap-2">
+            <Database className="w-5 h-5 text-amber-600 dark:text-amber-400" /> GitHub Open-Source
           </span>
         </div>
-        <p className="text-[10px] text-slate-400 max-w-xl mx-auto">
+        <p className="text-[10px] text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
           *Reference to open-source security intelligence tools & API infrastructure models.
         </p>
       </section>
@@ -287,10 +287,10 @@ export const Home = () => {
       <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <Badge variant="info" size="md">ENTERPRISE THREAT SUITE</Badge>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Comprehensive Cyber Fraud Defense Features
           </h2>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             Engineered to detect WhatsApp job traps, phishing links, fake HR offers, UPI fraud, and unverified caller handles.
           </p>
         </div>
@@ -299,49 +299,49 @@ export const Home = () => {
           {[
             {
               icon: Scan,
-              color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+              color: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
               title: 'AI Screenshot Scanner',
               desc: 'Upload chat screenshots from WhatsApp, Telegram, or SMS. OCR engine extracts text and Gemini AI analyzes risk instantly.'
             },
             {
               icon: Globe,
-              color: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+              color: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20',
               title: 'URL Phishing Inspector',
               desc: 'Check unverified web links for missing HTTPS certificates, suspicious .xyz TLDs, raw IP redirects, and fake login forms.'
             },
             {
               icon: Mail,
-              color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+              color: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20',
               title: 'Email Scam Analyzer',
               desc: 'Inspect suspicious recruiter emails, inspect SPF/DKIM headers, and flag fake job offers and lottery phishing traps.'
             },
             {
               icon: Phone,
-              color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+              color: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
               title: 'Phone & Caller Lookup',
               desc: 'Search unknown caller phone numbers or email addresses against verified community scam reports before responding.'
             },
             {
               icon: FileText,
-              color: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+              color: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/20',
               title: 'Tesseract OCR Detection',
               desc: 'Optical Character Recognition extracts text from low-res chat images and noisy screenshots with high accuracy.'
             },
             {
               icon: Zap,
-              color: 'text-red-400 bg-red-500/10 border-red-500/20',
+              color: 'text-red-600 dark:text-red-400 bg-red-500/10 border-red-500/20',
               title: '0-100 Risk Score Engine',
               desc: 'Generates a transparent 0 to 100 Risk Score with weighted point breakdown explaining why an item is dangerous.'
             },
             {
               icon: Users,
-              color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+              color: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
               title: 'Community Fraud Network',
               desc: 'Empowers citizens to report new scam incidents, upload evidence, and alert thousands of active users worldwide.'
             },
             {
               icon: Database,
-              color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+              color: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
               title: 'Threat Intelligence Database',
               desc: 'Real-time database indexing fraudulent UPI handles, bank account numbers, malicious URLs, and Telegram channels.'
             }
@@ -350,8 +350,8 @@ export const Home = () => {
               <div className={`p-3 w-fit rounded-2xl border ${feature.color} group-hover:scale-110 transition-transform`}>
                 <feature.icon className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">{feature.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{feature.desc}</p>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">{feature.title}</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{feature.desc}</p>
             </Card>
           ))}
         </div>
@@ -362,10 +362,10 @@ export const Home = () => {
       <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <Badge variant="success" size="md">SIMPLE 4-STEP WORKFLOW</Badge>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             How ScamShield AI Protects You
           </h2>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             From raw screenshot to full cybersecurity report in four automated steps.
           </p>
         </div>
@@ -377,15 +377,15 @@ export const Home = () => {
             { step: '03', title: 'Gemini AI Analysis', desc: 'AI models evaluate threat indicators, urgency lures, and deposit requests.' },
             { step: '04', title: 'Security Report', desc: 'Get instant 0-100 risk score, red flags list, and downloadable PDF report.' }
           ].map((item, idx) => (
-            <Card key={idx} className="glass-panel p-6 space-y-3 relative overflow-hidden border-slate-800 hover:border-cyan-500/40">
-              <span className="text-5xl font-black text-slate-800/80 absolute right-4 top-2 font-mono select-none">
+            <Card key={idx} className="glass-panel p-6 space-y-3 relative overflow-hidden border-slate-200 dark:border-slate-800 hover:border-cyan-500/40">
+              <span className="text-5xl font-black text-slate-200 dark:text-slate-800/80 absolute right-4 top-2 font-mono select-none">
                 {item.step}
               </span>
-              <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center text-xs mb-2">
+              <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold flex items-center justify-center text-xs mb-2">
                 {item.step}
               </div>
-              <h4 className="text-base font-bold text-white relative z-10">{item.title}</h4>
-              <p className="text-xs text-slate-400 leading-relaxed relative z-10">{item.desc}</p>
+              <h4 className="text-base font-bold text-slate-900 dark:text-white relative z-10">{item.title}</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed relative z-10">{item.desc}</p>
             </Card>
           ))}
         </div>
@@ -395,31 +395,31 @@ export const Home = () => {
       {/* ==================== SECTION 6: INTERACTIVE LIVE AI DEMO SANDBOX ==================== */}
       <section id="demo" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono font-bold text-cyan-400">
-            <Sparkles className="w-4 h-4 text-cyan-400 animate-spin" /> INTERACTIVE LIVE DEMO SANDBOX
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono font-bold text-cyan-700 dark:text-cyan-400">
+            <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyan-400 animate-spin" /> INTERACTIVE LIVE DEMO SANDBOX
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
             Test the AI Engine Right Now
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Click any sample scam below or paste your own message to see Gemini AI threat analysis in action.
           </p>
         </div>
 
-        <Card className="glass-panel p-6 sm:p-8 space-y-6 border-slate-700/80 shadow-2xl relative">
-          <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-2">
+        <Card className="glass-panel p-6 sm:p-8 space-y-6 border-slate-200 dark:border-slate-700/80 shadow-2xl relative">
+          <div className="flex flex-wrap items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 gap-2">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-red-500" />
               <span className="w-3 h-3 rounded-full bg-amber-500" />
               <span className="w-3 h-3 rounded-full bg-emerald-500" />
-              <span className="text-xs font-mono font-bold text-slate-300 ml-2">Live AI Inspection Terminal</span>
+              <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-300 ml-2">Live AI Inspection Terminal</span>
             </div>
             <Badge variant="info" size="sm">Gemini 1.5 Flash Ready</Badge>
           </div>
 
           {/* Sample Preset Buttons */}
           <div className="space-y-2">
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 uppercase tracking-wider">
               Click a Pre-Set Sample Scam to Test:
             </label>
             <div className="flex flex-wrap gap-2">
@@ -427,9 +427,9 @@ export const Home = () => {
                 <button
                   key={idx}
                   onClick={() => handleRunDemo(sample)}
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-xs font-bold text-slate-200 hover:text-cyan-300 transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 text-xs font-bold text-slate-800 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-cyan-300 transition-all flex items-center gap-1.5 shadow-xs"
                 >
-                  <Play className="w-3 h-3 text-cyan-400 fill-cyan-400" /> {sample.title}
+                  <Play className="w-3 h-3 text-cyan-600 dark:text-cyan-400 fill-cyan-500" /> {sample.title}
                 </button>
               ))}
             </div>
@@ -442,7 +442,7 @@ export const Home = () => {
               value={demoText}
               onChange={(e) => setDemoText(e.target.value)}
               placeholder="Or paste any suspicious SMS, WhatsApp message, Telegram job offer, or email content here..."
-              className="w-full glass-input p-4 rounded-xl text-xs border-slate-800 font-mono"
+              className="w-full glass-input p-4 rounded-xl text-xs border-slate-300 dark:border-slate-800 font-mono"
             />
             <Button
               onClick={handleCustomScanDemo}
@@ -457,11 +457,11 @@ export const Home = () => {
 
           {/* Scanning Progress Bar */}
           {demoLoading && (
-            <div className="p-6 text-center space-y-3 rounded-xl bg-slate-900/80 border border-slate-800">
-              <Sparkles className="w-8 h-8 text-cyan-400 animate-spin mx-auto" />
+            <div className="p-6 text-center space-y-3 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+              <Sparkles className="w-8 h-8 text-cyan-500 animate-spin mx-auto" />
               <div className="space-y-1">
-                <p className="text-xs text-cyan-300 font-mono font-bold">Scanning threat vectors & heuristics...</p>
-                <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden max-w-xs mx-auto border border-slate-800">
+                <p className="text-xs text-cyan-700 dark:text-cyan-300 font-mono font-bold">Scanning threat vectors & heuristics...</p>
+                <div className="w-full bg-slate-200 dark:bg-slate-950 rounded-full h-2 overflow-hidden max-w-xs mx-auto border border-slate-300 dark:border-slate-800">
                   <div className="bg-cyan-500 h-2 transition-all duration-300" style={{ width: `${demoProgress}%` }} />
                 </div>
               </div>
@@ -473,21 +473,21 @@ export const Home = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 grid grid-cols-1 md:grid-cols-12 gap-6"
+              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 grid grid-cols-1 md:grid-cols-12 gap-6"
             >
-              <div className="md:col-span-5 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-800 pb-4 md:pb-0">
+              <div className="md:col-span-5 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 pb-4 md:pb-0">
                 <RiskGauge score={demoResult.score} confidence={96} />
               </div>
               <div className="md:col-span-7 space-y-3">
                 <div className="flex items-center justify-between">
                   <Badge variant="danger" size="md">Category: {demoResult.category}</Badge>
-                  <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">Critical Threat Flagged</span>
+                  <span className="text-[10px] text-red-600 dark:text-red-400 font-bold uppercase tracking-wider">Critical Threat Flagged</span>
                 </div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Detected Fraud Indicators:</h4>
-                <ul className="space-y-1.5 text-xs text-slate-300 font-medium">
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Detected Fraud Indicators:</h4>
+                <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
                   {demoResult.flags.map((flag, i) => (
-                    <li key={i} className="flex items-center gap-2 text-red-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
+                    <li key={i} className="flex items-center gap-2 text-red-700 dark:text-red-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
                       <span>{flag}</span>
                     </li>
                   ))}
@@ -503,7 +503,7 @@ export const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <Badge variant="info" size="md">THE SCAMSHIELD ADVANTAGE</Badge>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Why ScamShield AI Leads Cyber Defense
           </h2>
         </div>
@@ -517,12 +517,12 @@ export const Home = () => {
             { title: 'Privacy-First Architecture', desc: 'Zero data retention policy ensures your uploaded screenshots are never exposed.', icon: Lock },
             { title: 'Real-Time Threat Alerts', desc: 'Instant risk score notifications, red flags list, and downloadable PDF reports.', icon: ShieldCheck }
           ].map((item, idx) => (
-            <Card key={idx} className="glass-panel p-8 space-y-4 border-slate-800 hover:border-cyan-500/40">
-              <div className="p-3 w-fit rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <Card key={idx} className="glass-panel p-8 space-y-4 border-slate-200 dark:border-slate-800 hover:border-cyan-500/40">
+              <div className="p-3 w-fit rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
                 <item.icon className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-white">{item.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{item.title}</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{item.desc}</p>
             </Card>
           ))}
         </div>
@@ -531,10 +531,10 @@ export const Home = () => {
 
       {/* ==================== SECTION 8: TRENDING COMMUNITY SCAMS ==================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
           <div>
             <Badge variant="danger" size="md">LIVE THREAT BULLETIN</Badge>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mt-1">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight mt-1">
               Trending Scams Cataloged Recently
             </h2>
           </div>
@@ -551,15 +551,15 @@ export const Home = () => {
             { title: 'Electricity Disconnection SMS', category: 'Phishing', risk: 95, reports: 412, time: '4 hours ago' },
             { title: 'WhatsApp QR Code Cash Refund', category: 'UPI Scam', risk: 92, reports: 389, time: '6 hours ago' }
           ].map((item, idx) => (
-            <Card key={idx} className="glass-panel p-6 space-y-4 border-slate-800">
+            <Card key={idx} className="glass-panel p-6 space-y-4 border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between">
                 <Badge variant="danger" size="sm">{item.category}</Badge>
-                <span className="text-[11px] font-mono text-slate-400">{item.time}</span>
+                <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">{item.time}</span>
               </div>
-              <h4 className="text-base font-bold text-white">{item.title}</h4>
-              <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-800/80">
-                <span className="text-slate-400 font-mono">{item.reports} Community Reports</span>
-                <span className="font-mono font-black text-red-400">{item.risk}% Risk Score</span>
+              <h4 className="text-base font-bold text-slate-900 dark:text-white">{item.title}</h4>
+              <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                <span className="text-slate-600 dark:text-slate-400 font-mono">{item.reports} Community Reports</span>
+                <span className="font-mono font-black text-red-600 dark:text-red-400">{item.risk}% Risk Score</span>
               </div>
             </Card>
           ))}
@@ -571,7 +571,7 @@ export const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <Badge variant="info" size="md">USER REVIEWS</Badge>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Trusted by Citizens & Professionals
           </h2>
         </div>
@@ -597,16 +597,16 @@ export const Home = () => {
               stars: 5
             }
           ].map((item, idx) => (
-            <Card key={idx} className="glass-panel p-8 space-y-4 border-slate-800">
-              <div className="flex items-center gap-1 text-amber-400">
+            <Card key={idx} className="glass-panel p-8 space-y-4 border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-1 text-amber-500 dark:text-amber-400">
                 {[...Array(item.stars)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400" />
                 ))}
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed font-medium">"{item.comment}"</p>
-              <div className="pt-2 border-t border-slate-800/80">
-                <h4 className="text-sm font-bold text-white">{item.name}</h4>
-                <span className="text-[11px] text-cyan-400 font-semibold">{item.role}</span>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">"{item.comment}"</p>
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white">{item.name}</h4>
+                <span className="text-[11px] text-cyan-600 dark:text-cyan-400 font-semibold">{item.role}</span>
               </div>
             </Card>
           ))}
@@ -618,19 +618,19 @@ export const Home = () => {
       <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <Badge variant="info" size="md">PRICING PLANS</Badge>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
             Transparent Pricing Plans
           </h2>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Free forever for individual citizens. Upgrade to Pro for automated API scanning and priority alerts.
           </p>
 
           {/* Toggle */}
-          <div className="inline-flex items-center gap-3 bg-slate-900/80 p-1.5 rounded-full border border-slate-800 mx-auto">
+          <div className="inline-flex items-center gap-3 bg-slate-200/80 dark:bg-slate-900/80 p-1.5 rounded-full border border-slate-300 dark:border-slate-800 mx-auto">
             <button
               onClick={() => setBillingCycle('monthly')}
               className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all ${
-                billingCycle === 'monthly' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400'
+                billingCycle === 'monthly' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400'
               }`}
             >
               Monthly Billing
@@ -638,7 +638,7 @@ export const Home = () => {
             <button
               onClick={() => setBillingCycle('annual')}
               className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all ${
-                billingCycle === 'annual' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400'
+                billingCycle === 'annual' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400'
               }`}
             >
               Annual (Save 20%)
@@ -648,16 +648,16 @@ export const Home = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1: Free Citizen */}
-          <Card className="glass-panel p-8 space-y-6 flex flex-col justify-between border-slate-800">
+          <Card className="glass-panel p-8 space-y-6 flex flex-col justify-between border-slate-200 dark:border-slate-800">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-white">Free Citizen Plan</h3>
-              <div className="text-4xl font-black text-white font-mono">$0 <span className="text-xs font-normal text-slate-400">/ forever</span></div>
-              <p className="text-xs text-slate-400">Perfect for individual scam protection.</p>
-              <ul className="space-y-2.5 text-xs text-slate-300 pt-2 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Unlimited Text & URL Scans</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> 10 Screenshot OCR Scans / Month</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Community Database Access</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Standard PDF Reports</li>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Free Citizen Plan</h3>
+              <div className="text-4xl font-black text-slate-900 dark:text-white font-mono">$0 <span className="text-xs font-normal text-slate-500 dark:text-slate-400">/ forever</span></div>
+              <p className="text-xs text-slate-600 dark:text-slate-400">Perfect for individual scam protection.</p>
+              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 pt-2 font-medium">
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Unlimited Text & URL Scans</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> 10 Screenshot OCR Scans / Month</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Community Database Access</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Standard PDF Reports</li>
               </ul>
             </div>
             <Link to="/register"><Button className="w-full" variant="secondary">Get Started Free</Button></Link>
@@ -669,32 +669,32 @@ export const Home = () => {
               MOST POPULAR
             </div>
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-white">Security Pro</h3>
-              <div className="text-4xl font-black text-white font-mono">
-                {billingCycle === 'monthly' ? '$9.99' : '$7.99'} <span className="text-xs font-normal text-slate-400">/ month</span>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Security Pro</h3>
+              <div className="text-4xl font-black text-slate-900 dark:text-white font-mono">
+                {billingCycle === 'monthly' ? '$9.99' : '$7.99'} <span className="text-xs font-normal text-slate-500 dark:text-slate-400">/ month</span>
               </div>
-              <p className="text-xs text-slate-400">Advanced AI protection for families & professionals.</p>
-              <ul className="space-y-2.5 text-xs text-slate-300 pt-2 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Unlimited OCR Screenshot Scans</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Real-time SMS & Caller Threat Alerts</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Priority PDF Audit Export</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Family Account Sharing (Up to 5)</li>
+              <p className="text-xs text-slate-600 dark:text-slate-400">Advanced AI protection for families & professionals.</p>
+              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 pt-2 font-medium">
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Unlimited OCR Screenshot Scans</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Real-time SMS & Caller Threat Alerts</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Priority PDF Audit Export</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Family Account Sharing (Up to 5)</li>
               </ul>
             </div>
             <Link to="/register"><Button className="w-full" variant="primary">Upgrade to Pro</Button></Link>
           </Card>
 
           {/* Card 3: Enterprise */}
-          <Card className="glass-panel p-8 space-y-6 flex flex-col justify-between border-slate-800">
+          <Card className="glass-panel p-8 space-y-6 flex flex-col justify-between border-slate-200 dark:border-slate-800">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-white">Enterprise Shield</h3>
-              <div className="text-4xl font-black text-white font-mono">$49 <span className="text-xs font-normal text-slate-400">/ month</span></div>
-              <p className="text-xs text-slate-400">API integration for apps & platforms.</p>
-              <ul className="space-y-2.5 text-xs text-slate-300 pt-2 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> REST API Access for Fraud Checks</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Custom Gemini AI Prompt Tuning</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> 99.9% Uptime SLA Guarantee</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-400" /> Dedicated Security Support</li>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Enterprise Shield</h3>
+              <div className="text-4xl font-black text-slate-900 dark:text-white font-mono">$49 <span className="text-xs font-normal text-slate-500 dark:text-slate-400">/ month</span></div>
+              <p className="text-xs text-slate-600 dark:text-slate-400">API integration for apps & platforms.</p>
+              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 pt-2 font-medium">
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> REST API Access for Fraud Checks</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Custom Gemini AI Prompt Tuning</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> 99.9% Uptime SLA Guarantee</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-cyan-600 dark:text-cyan-400" /> Dedicated Security Support</li>
               </ul>
             </div>
             <Link to="/register"><Button className="w-full" variant="secondary">Contact Enterprise Team</Button></Link>
@@ -707,8 +707,8 @@ export const Home = () => {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2">
           <Badge variant="info" size="md">HELP & FAQ</Badge>
-          <h2 className="text-3xl font-black text-white">Frequently Asked Questions</h2>
-          <p className="text-xs text-slate-400">Everything you need to know about ScamShield AI platform.</p>
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Everything you need to know about ScamShield AI platform.</p>
         </div>
 
         <div className="space-y-4">
@@ -716,14 +716,14 @@ export const Home = () => {
             <Card
               key={idx}
               onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
-              className="glass-panel p-6 cursor-pointer space-y-2 transition-all hover:border-cyan-500/40"
+              className="glass-panel p-6 cursor-pointer space-y-2 transition-all hover:border-cyan-500/40 border-slate-200 dark:border-slate-800"
             >
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-white">{faq.q}</h4>
-                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${expandedFaq === idx ? 'rotate-180 text-cyan-400' : ''}`} />
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white">{faq.q}</h4>
+                <ChevronDown className={`w-4 h-4 text-slate-500 dark:text-slate-400 transition-transform ${expandedFaq === idx ? 'rotate-180 text-cyan-600 dark:text-cyan-400' : ''}`} />
               </div>
               {expandedFaq === idx && (
-                <p className="text-xs text-slate-300 leading-relaxed pt-2 border-t border-slate-800/80 font-medium">
+                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed pt-2 border-t border-slate-200 dark:border-slate-800/80 font-medium">
                   {faq.a}
                 </p>
               )}
@@ -739,62 +739,26 @@ export const Home = () => {
           <div className="absolute -right-10 -top-10 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
           
           <div className="space-y-3 relative z-10">
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
               Protect Yourself Today.
             </h2>
-            <p className="text-sm text-slate-300 max-w-xl mx-auto font-medium">
+            <p className="text-sm text-slate-700 dark:text-slate-300 max-w-xl mx-auto font-medium">
               Scan your first suspicious message, screenshot, or URL link for free. Zero installation required.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2 relative z-10">
             <Link to="/scan">
-              <Button size="lg" icon={Scan} variant="primary" className="glow-cyan text-base px-8 py-3.5">
-                Start Free Scan
+              <Button size="lg" icon={Scan} variant="primary" className="px-8 py-3.5 shadow-xl text-base">
+                Start Free AI Scan
               </Button>
             </Link>
             <Link to="/register">
-              <Button size="lg" variant="secondary" className="text-base px-6 py-3.5">
-                Create Account
+              <Button size="lg" variant="secondary" className="px-8 py-3.5 text-base">
+                Create Free Account
               </Button>
             </Link>
           </div>
-        </Card>
-      </section>
-
-
-      {/* ==================== SECTION 13: NEWSLETTER ADVISORY ==================== */}
-      <section id="contact" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Card className="glass-panel p-8 text-center space-y-6 border-slate-800">
-          <div className="mx-auto w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20">
-            <Mail className="w-6 h-6" />
-          </div>
-          <div className="space-y-2">
-            <h3 className="text-2xl font-black text-white">Subscribe to Weekly Cyber Threat Advisories</h3>
-            <p className="text-xs text-slate-400 max-w-md mx-auto">
-              Get new scam pattern alerts, phishing domain lists, and cyber defense tips delivered straight to your inbox.
-            </p>
-          </div>
-
-          {subscribed ? (
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
-              ✓ Thank you for subscribing! You are now protected with weekly threat bulletins.
-            </div>
-          ) : (
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email address..."
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="w-full glass-input p-3 rounded-xl text-xs border-slate-800 font-mono"
-                required
-              />
-              <Button type="submit" variant="primary" className="w-full sm:w-auto whitespace-nowrap">
-                Subscribe Free
-              </Button>
-            </form>
-          )}
         </Card>
       </section>
 

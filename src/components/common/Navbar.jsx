@@ -29,7 +29,7 @@ export const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-slate-950/70 border-b border-slate-800/80 transition-all">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
@@ -37,7 +37,7 @@ export const Navbar = () => {
             <ShieldAlert className="w-6 h-6 text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-lg tracking-tight text-white flex items-center gap-1">
+            <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-1">
               ScamShield <span className="gradient-text font-black">AI</span>
             </span>
           </div>
@@ -52,7 +52,9 @@ export const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`text-sm font-medium transition-colors ${
-                  isActive ? 'text-cyan-400 font-semibold' : 'text-slate-300 hover:text-white'
+                  isActive
+                    ? 'text-cyan-600 dark:text-cyan-400 font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
                 }`}
               >
                 {link.name}
@@ -66,10 +68,10 @@ export const Navbar = () => {
           <NotificationCenter />
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 transition-colors"
+            className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60 transition-colors"
             title="Toggle theme"
           >
-            {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-300" />}
+            {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
           </button>
 
           {isAuthenticated ? (
@@ -86,7 +88,7 @@ export const Navbar = () => {
               </Link>
               <button
                 onClick={handleLogout}
-                className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-slate-800/60 transition-colors"
+                className="p-2 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:text-red-400 dark:hover:bg-slate-800/60 transition-colors"
                 title="Logout"
               >
                 <LogOut className="w-5 h-5" />
@@ -112,13 +114,13 @@ export const Navbar = () => {
         <div className="md:hidden flex items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-400"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400"
           >
-            {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
+            {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-300 hover:bg-slate-800/60"
+            className="p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800/60"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -127,18 +129,18 @@ export const Navbar = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass-panel border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+        <div className="md:hidden glass-panel border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-200 hover:bg-slate-800/60"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-800 dark:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800/60"
             >
               {link.name}
             </Link>
           ))}
-          <div className="pt-4 border-t border-slate-800 flex flex-col gap-2">
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>

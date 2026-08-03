@@ -5,7 +5,7 @@ export const Input = forwardRef(
     return (
       <div className={`space-y-1.5 ${containerClassName}`}>
         {label && (
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-400">
             {label}
           </label>
         )}
@@ -19,13 +19,13 @@ export const Input = forwardRef(
             ref={ref}
             className={`w-full py-2.5 ${
               Icon ? 'pl-10' : 'pl-3.5'
-            } pr-3.5 text-sm glass-input rounded-xl transition-all placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-500/50 ${
-              error ? 'border-red-500/80 focus:ring-red-500/50' : 'border-slate-800'
+            } pr-3.5 text-sm glass-input rounded-xl transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-500/50 ${
+              error ? 'border-red-500/80 focus:ring-red-500/50' : 'border-slate-300 dark:border-slate-800'
             } ${className}`}
             {...props}
           />
         </div>
-        {error && <p className="text-xs text-red-400 font-medium">{error}</p>}
+        {error && <p className="text-xs text-red-500 dark:text-red-400 font-medium">{error}</p>}
       </div>
     );
   }

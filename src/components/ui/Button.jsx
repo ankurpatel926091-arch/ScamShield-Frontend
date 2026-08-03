@@ -18,13 +18,13 @@ export const Button = ({
     primary:
       'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/20 border border-cyan-400/30',
     secondary:
-      'bg-slate-800/80 hover:bg-slate-700/80 text-slate-100 border border-slate-700/60 backdrop-blur-md',
+      'bg-slate-200 hover:bg-slate-300 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700/60 backdrop-blur-md',
     danger:
       'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white shadow-lg shadow-red-500/20 border border-red-400/30',
     outline:
-      'border border-cyan-500/40 hover:border-cyan-400 text-cyan-400 hover:bg-cyan-500/10 backdrop-blur-sm',
+      'border border-cyan-600 dark:border-cyan-500/40 hover:border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 backdrop-blur-sm',
     ghost:
-      'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
+      'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/50'
   };
 
   const sizes = {

@@ -122,13 +122,13 @@ export const Scanner = () => {
     <div className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-xs font-bold text-cyan-400 border-cyan-500/30">
-          <Scan className="w-4 h-4 text-cyan-400" /> Multi-Modal AI Threat Detection Center
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-xs font-bold text-cyan-600 dark:text-cyan-400 border-cyan-500/30">
+          <Scan className="w-4 h-4 text-cyan-500" /> Multi-Modal AI Threat Detection Center
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
           Analyze & Detect <span className="gradient-text">Scam Threats</span>
         </h1>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           Upload screenshots, paste suspicious chat text, check website links, or search unknown callers.
         </p>
       </div>
@@ -146,13 +146,13 @@ export const Scanner = () => {
       ) : (
         <Card className="glass-panel p-6 space-y-6">
           {/* Navigation Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-800 pb-4">
+          <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
             <button
               onClick={() => { setActiveTab('screenshot'); setErrorMsg(''); }}
               className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
                 activeTab === 'screenshot'
                   ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
               }`}
             >
               <Upload className="w-4 h-4" /> Screenshot OCR
@@ -163,7 +163,7 @@ export const Scanner = () => {
               className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
                 activeTab === 'text'
                   ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
               }`}
             >
               <FileText className="w-4 h-4" /> Text Fraud Analyzer
@@ -174,7 +174,7 @@ export const Scanner = () => {
               className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
                 activeTab === 'url'
                   ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
               }`}
             >
               <Globe className="w-4 h-4" /> Phishing URL Checker
@@ -185,7 +185,7 @@ export const Scanner = () => {
               className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
                 activeTab === 'lookup'
                   ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
               }`}
             >
               <Phone className="w-4 h-4" /> Phone / Email Lookup
@@ -193,7 +193,7 @@ export const Scanner = () => {
           </div>
 
           {errorMsg && (
-            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs flex items-center gap-2">
+            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -202,7 +202,7 @@ export const Scanner = () => {
           {/* TAB 1: Screenshot OCR */}
           {activeTab === 'screenshot' && (
             <div className="space-y-6">
-              <div className="border-2 border-dashed border-slate-700/80 hover:border-cyan-500/50 rounded-2xl p-8 text-center bg-slate-900/40 transition-colors relative cursor-pointer group">
+              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/50 rounded-2xl p-8 text-center bg-slate-100/80 dark:bg-slate-900/40 transition-colors relative cursor-pointer group">
                 <input
                   type="file"
                   accept="image/*"
@@ -211,16 +211,16 @@ export const Scanner = () => {
                 />
                 {imagePreview ? (
                   <div className="space-y-4">
-                    <img src={imagePreview} alt="Screenshot Preview" className="max-h-64 mx-auto rounded-xl shadow-lg border border-slate-700" />
-                    <p className="text-xs text-cyan-400 font-semibold">Click to choose a different screenshot</p>
+                    <img src={imagePreview} alt="Screenshot Preview" className="max-h-64 mx-auto rounded-xl shadow-lg border border-slate-300 dark:border-slate-700" />
+                    <p className="text-xs text-cyan-600 dark:text-cyan-400 font-semibold">Click to choose a different screenshot</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                       <Upload className="w-6 h-6" />
                     </div>
-                    <h3 className="text-sm font-bold text-white">Drag & drop chat screenshot here, or click to browse</h3>
-                    <p className="text-xs text-slate-500">Supports PNG, JPG, WEBP formats up to 10MB</p>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">Drag & drop chat screenshot here, or click to browse</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Supports PNG, JPG, WEBP formats up to 10MB</p>
                   </div>
                 )}
               </div>
@@ -243,7 +243,7 @@ export const Scanner = () => {
           {activeTab === 'text' && (
             <div className="space-y-5">
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400">
                   Paste Suspicious Chat Message / Email Content
                 </label>
                 <textarea
@@ -251,7 +251,7 @@ export const Scanner = () => {
                   value={textContent}
                   onChange={(e) => setTextContent(e.target.value)}
                   placeholder="Paste WhatsApp message, Telegram job offer text, SMS, or suspicious email body here..."
-                  className="w-full glass-input p-4 rounded-xl text-sm transition-all border-slate-800 focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full glass-input p-4 rounded-xl text-sm transition-all border-slate-300 dark:border-slate-800 focus:ring-2 focus:ring-cyan-500/50"
                 />
               </div>
 
@@ -311,22 +311,22 @@ export const Scanner = () => {
               </div>
 
               {lookupResult && (
-                <Card className="glass-card p-6 space-y-4 border-slate-700">
+                <Card className="glass-card p-6 space-y-4 border-slate-200 dark:border-slate-700">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-white">Search Result for: {lookupResult.query}</h4>
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white">Search Result for: {lookupResult.query}</h4>
                     <Badge variant={lookupResult.verifiedScam ? 'danger' : lookupResult.found ? 'warning' : 'success'} size="md">
                       {lookupResult.verifiedScam ? 'VERIFIED FRAUDSTER' : lookupResult.found ? 'REPORTED SUSPECT' : 'NO REPORTS FOUND'}
                     </Badge>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 text-xs">
-                    <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <span className="text-slate-400">Total Community Reports:</span>
-                      <p className="text-lg font-black text-white">{lookupResult.totalReports}</p>
+                    <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+                      <span className="text-slate-600 dark:text-slate-400">Total Community Reports:</span>
+                      <p className="text-lg font-black text-slate-900 dark:text-white">{lookupResult.totalReports}</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <span className="text-slate-400">Threat Risk Level:</span>
-                      <p className="text-lg font-black text-red-400">{lookupResult.riskScore}/100</p>
+                    <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+                      <span className="text-slate-600 dark:text-slate-400">Threat Risk Level:</span>
+                      <p className="text-lg font-black text-red-600 dark:text-red-400">{lookupResult.riskScore}/100</p>
                     </div>
                   </div>
                 </Card>
