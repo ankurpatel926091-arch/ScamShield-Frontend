@@ -111,6 +111,7 @@ export const Scanner = () => {
     setImagePreview(dataUrl);
     setImageBase64(dataUrl);
     stopCamera();
+    handleScreenshotScan(dataUrl);
   };
 
   const toggleCameraFacing = () => {
@@ -124,22 +125,25 @@ export const Scanner = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
-        setImageBase64(reader.result);
+        const dataUrl = reader.result;
+        setImagePreview(dataUrl);
+        setImageBase64(dataUrl);
+        handleScreenshotScan(dataUrl);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleScreenshotScan = async () => {
-    if (!imageBase64 && !textContent) {
+  const handleScreenshotScan = async (overrideBase64) => {
+    const payloadBase64 = overrideBase64 || imageBase64;
+    if (!payloadBase64 && !textContent) {
       setErrorMsg('Please upload a screenshot image, take a camera photo, or paste extracted text.');
       return;
     }
     setLoading(true);
     setErrorMsg('');
     try {
-      const res = await aiApi.scanScreenshot(imageBase64, textContent);
+      const res = await aiApi.scanScreenshot(payloadBase64, textContent);
       setReportResult(res.data.report);
     } catch (err) {
       setErrorMsg(err.message || 'Screenshot OCR processing failed.');
