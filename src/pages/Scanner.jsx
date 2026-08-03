@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { createWorker } from 'tesseract.js';
 import { aiApi } from '../services/aiApi';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -136,10 +137,23 @@ export const Scanner = () => {
     }
   };
 
-  // Client-Side Browser AI Fallback Engine
-  const analyzeClientSideFallback = async (payloadBase64, textContent) => {
-    let rawText = textContent || '';
+  // Client-Side Browser AI & OCR Engine
+  const analyzeClientSideFallback = async (payloadBase64, textContentInput) => {
+    let rawText = textContentInput || '';
     let ocrConfidence = 90;
+
+    // Run Tesseract.js OCR directly in browser if base64 image provided and no textContent!
+    if (payloadBase64 && !rawText) {
+      try {
+        const worker = await createWorker('eng');
+        const ret = await worker.recognize(payloadBase64);
+        await worker.terminate();
+        rawText = ret.data?.text ? ret.data.text.trim() : '';
+        ocrConfidence = Math.round(ret.data?.confidence || 85);
+      } catch (e) {
+        console.warn('[Browser OCR Notice]', e);
+      }
+    }
 
     const cleanedText = (rawText || '')
       .replace(/[^\w\s.,!?:;/@#$%&*()+\-=\[\]'"]/gi, ' ')
@@ -147,105 +161,184 @@ export const Scanner = () => {
       .trim();
 
     const textLower = cleanedText.toLowerCase();
-    let riskScore = 88;
-    let category = 'Fake Job';
-    let redFlags = [
-      'Upfront registration or security deposit fee request',
-      'Unverified Telegram / WhatsApp recruiter contact',
-      'Unrealistic high daily income for basic tasks'
-    ];
-    let decisionMatrix = [
-      { indicator: 'Registration / Upfront Fee Required', weight: 30 },
-      { indicator: 'Unverified Communication Channel', weight: 25 },
-      { indicator: 'Unrealistically High Yield Lure', weight: 20 },
-      { indicator: 'Urgent Action Coercion', weight: 13 }
-    ];
 
+    // DYNAMIC CATEGORY & THREAT ANALYSIS FROM ACTUAL OCR TEXT
+    let riskScore = 20;
+    let category = 'Safe Content';
+    let redFlags = [];
+    let decisionMatrix = [];
+    let recommendations = ['Verify message source on official corporate channels.'];
+    let safetyTips = ['Never transfer money or share credentials with unverified senders.'];
+
+    // 1. Lottery / Prize / Reward Scam
     if (
-      textLower.includes('lucky') ||
       textLower.includes('congratulations') ||
+      textLower.includes('lucky') ||
       textLower.includes('winner') ||
       textLower.includes('prize') ||
       textLower.includes('diwali') ||
-      textLower.includes('draw')
+      textLower.includes('dhamaka') ||
+      textLower.includes('won') ||
+      textLower.includes('draw') ||
+      textLower.includes('luckyclub') ||
+      textLower.includes('processing fee')
     ) {
       category = 'Lottery / Prize Scam';
       riskScore = 95;
       redFlags = [
-        'Unsolicited lucky winner / Diwali dhamaka prize claim',
-        'Requests paying processing fee to claim prize money',
-        'Fake club / organization impersonation'
+        'Unsolicited Lucky Winner / Diwali Dhamaka prize claim lure',
+        'Processing fee or advance deposit requested to claim prize money',
+        'Fake club / organization impersonation (Lucky Win Club)',
+        'Artificial urgency or short validity deadline'
       ];
       decisionMatrix = [
-        { indicator: 'Prize Lure / Unsolicited Reward', weight: 35 },
-        { indicator: 'Processing Fee Required for Prize', weight: 30 },
-        { indicator: 'Fake Club Impersonation', weight: 20 },
-        { indicator: 'High Pressure Deadline', weight: 10 }
+        { indicator: 'Unsolicited Prize / Lucky Winner Lure', weight: 35 },
+        { indicator: 'Processing Fee Required for Prize Money', weight: 30 },
+        { indicator: 'Unverified Entity / Fake Club Impersonation', weight: 20 },
+        { indicator: 'High Pressure Deadline Urgency', weight: 10 }
       ];
-    } else if (
+      recommendations = [
+        'Do NOT pay any registration or processing fee.',
+        'Never transfer money to claim prize money or rewards.',
+        'Report perpetrator details to National Cyber Crime portal (cybercrime.gov.in).'
+      ];
+      safetyTips = [
+        'Legitimate lotteries and contests NEVER demand money or processing fees to release winnings.',
+        'Always verify contest claims on official company websites.'
+      ];
+    }
+    // 2. Fake Job / Internship Scam
+    else if (
+      textLower.includes('job') ||
+      textLower.includes('part-time') ||
+      textLower.includes('rating') ||
+      textLower.includes('daily income') ||
+      textLower.includes('work from home') ||
+      textLower.includes('telegram') ||
+      textLower.includes('lpa')
+    ) {
+      category = 'Fake Job Scam';
+      riskScore = 92;
+      redFlags = [
+        'Upfront registration or security deposit fee request',
+        'Unverified Telegram or WhatsApp recruiter contact',
+        'Unrealistically high daily income promise for basic tasks'
+      ];
+      decisionMatrix = [
+        { indicator: 'Registration / Upfront Fee Required', weight: 30 },
+        { indicator: 'Unverified Communication Channel', weight: 25 },
+        { indicator: 'Unrealistically High Yield Lure', weight: 20 },
+        { indicator: 'Urgent Action Coercion', weight: 17 }
+      ];
+      recommendations = [
+        'Do NOT pay any registration or security deposit fee.',
+        'Verify hiring managers on LinkedIn or official corporate career portals.'
+      ];
+    }
+    // 3. UPI / QR Code Scam
+    else if (
       textLower.includes('upi') ||
       textLower.includes('qr') ||
       textLower.includes('paytm') ||
       textLower.includes('gpay') ||
-      textLower.includes('phonepe')
+      textLower.includes('phonepe') ||
+      textLower.includes('collect request')
     ) {
       category = 'UPI / QR Code Scam';
       riskScore = 94;
       redFlags = [
         'Requests entering UPI PIN to receive money',
-        'Unverified payment link or QR code lure'
+        'Unverified payment link or QR code lure',
+        'High-risk financial refund trap pattern'
       ];
-    } else if (
+      decisionMatrix = [
+        { indicator: 'UPI PIN Request to Receive Money', weight: 40 },
+        { indicator: 'Unverified Payment Link / QR Lure', weight: 30 },
+        { indicator: 'Urgent Payment Trap Pattern', weight: 24 }
+      ];
+      recommendations = [
+        'Never enter your UPI PIN to receive money. UPI PIN is ONLY for paying.',
+        'Decline unverified collect requests immediately.'
+      ];
+    }
+    // 4. Electricity Bill / Phishing SMS Trap
+    else if (
       textLower.includes('bill') ||
       textLower.includes('disconnect') ||
+      textLower.includes('electricity') ||
       textLower.includes('apk') ||
-      textLower.includes('electricity')
+      textLower.includes('urgent')
     ) {
-      category = 'Phishing / SMS Trap';
+      category = 'Electricity Bill / Phishing SMS';
       riskScore = 96;
       redFlags = [
-        'Urgent power disconnection threat',
-        'Urges installing third-party .APK file'
+        'Urgent power disconnection threat lure',
+        'Urges installing third-party .APK package',
+        'Unofficial caller phone number provided'
       ];
-    } else if (textLower.includes('bank') || textLower.includes('account') || textLower.includes('kyc')) {
-      category = 'Bank Scam';
+      decisionMatrix = [
+        { indicator: 'Urgent Utility Disconnection Threat', weight: 40 },
+        { indicator: 'Malicious APK Download Link', weight: 35 },
+        { indicator: 'Unofficial Support Phone Number', weight: 21 }
+      ];
+      recommendations = [
+        'Do NOT install unknown .APK files or remote control apps.',
+        'Pay utility bills ONLY through official electricity board portals.'
+      ];
+    }
+    // 5. Bank / KYC Scam
+    else if (
+      textLower.includes('bank') ||
+      textLower.includes('account') ||
+      textLower.includes('kyc') ||
+      textLower.includes('suspended') ||
+      textLower.includes('blocked')
+    ) {
+      category = 'Bank Impersonation Scam';
       riskScore = 91;
-      redFlags = ['Fake bank impersonation lure', 'Unsolicited KYC update request'];
+      redFlags = [
+        'Fake bank impersonation lure',
+        'Unsolicited KYC update threat request',
+        'Suspicious banking credentials trap link'
+      ];
+      decisionMatrix = [
+        { indicator: 'Bank Account Blocked / KYC Lure', weight: 45 },
+        { indicator: 'Unofficial Phishing URL Included', weight: 30 },
+        { indicator: 'Urgency & Account Suspension Threat', weight: 16 }
+      ];
+      recommendations = [
+        'Never click unsolicited SMS links claiming account block.',
+        'Contact your bank directly via official customer care phone line.'
+      ];
     }
 
-    const keywords = ['congratulations', 'winner', 'prize', 'fee', 'deposit', 'lucky', 'telegram', 'upi', 'whatsapp', 'job'].filter(
-      (kw) => textLower.includes(kw)
-    );
+    const keywords = [
+      'congratulations', 'winner', 'prize', 'fee', 'deposit', 'lucky', 'telegram',
+      'upi', 'whatsapp', 'job', 'diwali', 'draw', 'lpa', 'luckyclub', 'bank', 'kyc', 'apk'
+    ].filter((kw) => textLower.includes(kw));
 
     return {
       report: {
         category,
         riskScore,
         confidenceScore: ocrConfidence,
-        summary: `AI Security Intelligence analyzed the uploaded payload. The content contains severe indicators associated with ${category} fraud tactics, including fee requests and high-risk lures.`,
-        detailedExplanation: `AI Security Intelligence analyzed the uploaded payload. The content contains severe indicators associated with ${category} fraud tactics, including fee requests and high-risk lures.`,
+        summary: `AI Security Intelligence processed the extracted OCR text from the image. The content contains severe threat indicators matching ${category} tactics, including fee demands and high-risk lures.`,
+        detailedExplanation: `AI Security Intelligence processed the extracted OCR text from the image. The content contains severe threat indicators matching ${category} tactics, including fee demands and high-risk lures.`,
         redFlags,
         reasons: redFlags,
-        recommendations: [
-          'Do NOT pay any registration or processing fee.',
-          'Never enter your UPI PIN to receive money.',
-          'Report perpetrator details to cybercrime cell (cybercrime.gov.in).'
-        ],
-        safetyTips: [
-          'Legitimate companies never demand money to release prizes or job offers.',
-          'Verify caller details on official corporate websites.'
-        ],
+        recommendations,
+        safetyTips,
         keywords,
         decisionMatrix,
         reasoning: [
-          `Identified ${category} threat patterns from OCR payload.`,
-          `Extracted ${keywords.length} suspicious threat keywords.`,
-          `Calculated composite risk rating of ${riskScore}%.`
+          `Extracted readable OCR text from screenshot (${cleanedText.length} chars).`,
+          `Identified ${category} threat classification from OCR keywords.`,
+          `Calculated composite threat score of ${riskScore}%.`
         ]
       },
       ocrPanel: {
-        rawText: rawText || 'Target payload inspected via Client AI engine.',
-        cleanedText: cleanedText || 'Target payload inspected via Client AI engine.',
+        rawText: rawText || 'No text extracted from target payload.',
+        cleanedText: cleanedText || 'No text extracted from target payload.',
         confidence: ocrConfidence,
         keywords
       },
