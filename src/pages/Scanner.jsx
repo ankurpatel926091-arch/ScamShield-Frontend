@@ -170,6 +170,67 @@ export const Scanner = () => {
     let recommendations = ['Verify message source on official corporate channels.'];
     let safetyTips = ['Never transfer money or share credentials with unverified senders.'];
 
+    // 0. URL & Domain Deep Analysis (Phishing / Typosquatting / Fake Brand / No SSL)
+    const urlMatches = textLower.match(/(https?:\/\/[^\s]+|[a-z0-9-]+\.(xyz|top|tk|online|site|club|work|info|biz|cc|ru|net|in|org)[^\s]*)/gi) || (urlInput ? [urlInput] : []);
+
+    let urlFlags = [];
+    let urlMatrix = [];
+
+    if (urlMatches.length > 0 || activeTab === 'url') {
+      const targetStr = (urlMatches[0] || urlInput || textLower).toLowerCase();
+
+      if (targetStr.startsWith('http://') || !targetStr.includes('https://')) {
+        urlFlags.push('HTTP (No SSL)');
+        urlMatrix.push({ indicator: 'HTTP (No SSL) Unencrypted Link', weight: 25 });
+      }
+
+      if (/\.(xyz|top|tk|online|site|club|work|info|biz|cc|ru)/.test(targetStr)) {
+        urlFlags.push('Domain Reputation Low');
+        urlFlags.push('Unknown Domain / High-Risk TLD');
+        urlMatrix.push({ indicator: 'Low Reputation TLD Extension (.xyz/.top/.site/.club)', weight: 20 });
+      }
+
+      if (/amaz[o0]n|paytm|sbi|hdfc|icici|g[o0]{2}gle|flipkart|tcs|whatsapp|telegram/.test(targetStr)) {
+        urlFlags.push('Fake Brand Impersonation');
+        urlFlags.push('Typosquatting');
+        urlMatrix.push({ indicator: 'Typosquatting & Brand Impersonation Target', weight: 30 });
+      }
+
+      if (/login|signin|verify|account|pass|kyc|update/.test(targetStr)) {
+        urlFlags.push('Credential Harvesting');
+        urlFlags.push('Fake Login Page');
+        urlMatrix.push({ indicator: 'Credential Harvesting Login Lure', weight: 25 });
+      }
+
+      if (/free|reward|claim|bonus|gift|dhamaka|cashback|win|lucky/.test(targetStr)) {
+        urlFlags.push('Free Offer Lure');
+        urlMatrix.push({ indicator: 'Free Offer / Reward Bait Lure', weight: 20 });
+      }
+
+      if (urlFlags.length > 0) {
+        category = urlFlags.includes('Fake Brand Impersonation')
+          ? 'Fake Brand Impersonation & Phishing'
+          : urlFlags.includes('Typosquatting')
+          ? 'Typosquatting Scam'
+          : urlFlags.includes('Credential Harvesting')
+          ? 'Phishing & Credential Harvesting'
+          : 'Phishing URL / Suspicious Domain';
+
+        riskScore = Math.max(riskScore, 92);
+        redFlags = Array.from(new Set([...urlFlags, ...redFlags]));
+        decisionMatrix = [...urlMatrix, ...decisionMatrix];
+        recommendations = [
+          'Do NOT enter passwords, OTPs, or banking details on this link.',
+          'Verify the website URL directly on official corporate web portals.',
+          'Check browser address bar for valid SSL HTTPS encryption certificate.'
+        ];
+        safetyTips = [
+          'Phishing websites often use slight spelling misspellings (typosquatting) to impersonate trusted brands.',
+          'Never trust unencrypted HTTP links asking for personal or banking credentials.'
+        ];
+      }
+    }
+
     // 1. Lottery / Prize / Reward Scam
     if (
       textLower.includes('congratulations') ||
@@ -185,17 +246,19 @@ export const Scanner = () => {
     ) {
       category = 'Lottery / Prize Scam';
       riskScore = 95;
-      redFlags = [
+      redFlags = Array.from(new Set([
+        ...redFlags,
         'Unsolicited Lucky Winner / Diwali Dhamaka prize claim lure',
         'Processing fee or advance deposit requested to claim prize money',
         'Fake club / organization impersonation (Lucky Win Club)',
         'Artificial urgency or short validity deadline'
-      ];
+      ]));
       decisionMatrix = [
         { indicator: 'Unsolicited Prize / Lucky Winner Lure', weight: 35 },
         { indicator: 'Processing Fee Required for Prize Money', weight: 30 },
         { indicator: 'Unverified Entity / Fake Club Impersonation', weight: 20 },
-        { indicator: 'High Pressure Deadline Urgency', weight: 10 }
+        { indicator: 'High Pressure Deadline Urgency', weight: 10 },
+        ...decisionMatrix
       ];
       recommendations = [
         'Do NOT pay any registration or processing fee.',
@@ -217,18 +280,22 @@ export const Scanner = () => {
       textLower.includes('telegram') ||
       textLower.includes('lpa')
     ) {
-      category = 'Fake Job Scam';
-      riskScore = 92;
-      redFlags = [
+      if (!urlFlags.length) {
+        category = 'Fake Job Scam';
+        riskScore = 92;
+      }
+      redFlags = Array.from(new Set([
+        ...redFlags,
         'Upfront registration or security deposit fee request',
         'Unverified Telegram or WhatsApp recruiter contact',
         'Unrealistically high daily income promise for basic tasks'
-      ];
+      ]));
       decisionMatrix = [
         { indicator: 'Registration / Upfront Fee Required', weight: 30 },
         { indicator: 'Unverified Communication Channel', weight: 25 },
         { indicator: 'Unrealistically High Yield Lure', weight: 20 },
-        { indicator: 'Urgent Action Coercion', weight: 17 }
+        { indicator: 'Urgent Action Coercion', weight: 17 },
+        ...decisionMatrix
       ];
       recommendations = [
         'Do NOT pay any registration or security deposit fee.',
@@ -244,17 +311,21 @@ export const Scanner = () => {
       textLower.includes('phonepe') ||
       textLower.includes('collect request')
     ) {
-      category = 'UPI / QR Code Scam';
-      riskScore = 94;
-      redFlags = [
+      if (!urlFlags.length) {
+        category = 'UPI / QR Code Scam';
+        riskScore = 94;
+      }
+      redFlags = Array.from(new Set([
+        ...redFlags,
         'Requests entering UPI PIN to receive money',
         'Unverified payment link or QR code lure',
         'High-risk financial refund trap pattern'
-      ];
+      ]));
       decisionMatrix = [
         { indicator: 'UPI PIN Request to Receive Money', weight: 40 },
         { indicator: 'Unverified Payment Link / QR Lure', weight: 30 },
-        { indicator: 'Urgent Payment Trap Pattern', weight: 24 }
+        { indicator: 'Urgent Payment Trap Pattern', weight: 24 },
+        ...decisionMatrix
       ];
       recommendations = [
         'Never enter your UPI PIN to receive money. UPI PIN is ONLY for paying.',
@@ -266,20 +337,23 @@ export const Scanner = () => {
       textLower.includes('bill') ||
       textLower.includes('disconnect') ||
       textLower.includes('electricity') ||
-      textLower.includes('apk') ||
-      textLower.includes('urgent')
+      textLower.includes('apk')
     ) {
-      category = 'Electricity Bill / Phishing SMS';
-      riskScore = 96;
-      redFlags = [
+      if (!urlFlags.length) {
+        category = 'Electricity Bill / Phishing SMS';
+        riskScore = 96;
+      }
+      redFlags = Array.from(new Set([
+        ...redFlags,
         'Urgent power disconnection threat lure',
         'Urges installing third-party .APK package',
         'Unofficial caller phone number provided'
-      ];
+      ]));
       decisionMatrix = [
         { indicator: 'Urgent Utility Disconnection Threat', weight: 40 },
         { indicator: 'Malicious APK Download Link', weight: 35 },
-        { indicator: 'Unofficial Support Phone Number', weight: 21 }
+        { indicator: 'Unofficial Support Phone Number', weight: 21 },
+        ...decisionMatrix
       ];
       recommendations = [
         'Do NOT install unknown .APK files or remote control apps.',
@@ -294,17 +368,21 @@ export const Scanner = () => {
       textLower.includes('suspended') ||
       textLower.includes('blocked')
     ) {
-      category = 'Bank Impersonation Scam';
-      riskScore = 91;
-      redFlags = [
+      if (!urlFlags.length) {
+        category = 'Bank Impersonation Scam';
+        riskScore = 91;
+      }
+      redFlags = Array.from(new Set([
+        ...redFlags,
         'Fake bank impersonation lure',
         'Unsolicited KYC update threat request',
         'Suspicious banking credentials trap link'
-      ];
+      ]));
       decisionMatrix = [
         { indicator: 'Bank Account Blocked / KYC Lure', weight: 45 },
         { indicator: 'Unofficial Phishing URL Included', weight: 30 },
-        { indicator: 'Urgency & Account Suspension Threat', weight: 16 }
+        { indicator: 'Urgency & Account Suspension Threat', weight: 16 },
+        ...decisionMatrix
       ];
       recommendations = [
         'Never click unsolicited SMS links claiming account block.',
@@ -314,16 +392,17 @@ export const Scanner = () => {
 
     const keywords = [
       'congratulations', 'winner', 'prize', 'fee', 'deposit', 'lucky', 'telegram',
-      'upi', 'whatsapp', 'job', 'diwali', 'draw', 'lpa', 'luckyclub', 'bank', 'kyc', 'apk'
-    ].filter((kw) => textLower.includes(kw));
+      'upi', 'whatsapp', 'job', 'diwali', 'draw', 'lpa', 'luckyclub', 'bank', 'kyc', 'apk',
+      'http', 'login', 'verify', 'typosquatting', 'impersonation', 'domain'
+    ].filter((kw) => textLower.includes(kw) || redFlags.some(rf => rf.toLowerCase().includes(kw)));
 
     return {
       report: {
         category,
         riskScore,
         confidenceScore: ocrConfidence,
-        summary: `AI Security Intelligence processed the extracted OCR text from the image. The content contains severe threat indicators matching ${category} tactics, including fee demands and high-risk lures.`,
-        detailedExplanation: `AI Security Intelligence processed the extracted OCR text from the image. The content contains severe threat indicators matching ${category} tactics, including fee demands and high-risk lures.`,
+        summary: `AI Security Intelligence analyzed the URL/payload. The content contains critical threat indicators matching ${category}, including ${redFlags.slice(0, 3).join(', ')}.`,
+        detailedExplanation: `AI Security Intelligence analyzed the URL/payload. The content contains critical threat indicators matching ${category}, including ${redFlags.slice(0, 3).join(', ')}.`,
         redFlags,
         reasons: redFlags,
         recommendations,
@@ -331,14 +410,14 @@ export const Scanner = () => {
         keywords,
         decisionMatrix,
         reasoning: [
-          `Extracted readable OCR text from screenshot (${cleanedText.length} chars).`,
-          `Identified ${category} threat classification from OCR keywords.`,
+          `Inspected URL/OCR payload (${cleanedText.length} chars).`,
+          `Identified ${category} threat classification from security heuristics.`,
           `Calculated composite threat score of ${riskScore}%.`
         ]
       },
       ocrPanel: {
-        rawText: rawText || 'No text extracted from target payload.',
-        cleanedText: cleanedText || 'No text extracted from target payload.',
+        rawText: rawText || 'Target payload inspected via AI Security engine.',
+        cleanedText: cleanedText || 'Target payload inspected via AI Security engine.',
         confidence: ocrConfidence,
         keywords
       },
